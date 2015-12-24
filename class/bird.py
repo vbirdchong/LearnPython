@@ -2,6 +2,7 @@ __metaclass__  = type
 
 class Bird:
     def __init__(self):
+        print "init-ing"
         self.hungry = True
 
     def eat(self):
@@ -14,6 +15,7 @@ class Bird:
 
 class SongBird(Bird):
     def __init__(self):
+        # 使用超类
         super(SongBird, self).__init__()
         # 另一种赋值方法
         # Bird.__init__(self)
