@@ -17,8 +17,8 @@ class SpiderModel(object):
 		
 	# 获取页面中的所有的段子，添加到返回列表中
 	def get_page(self, page_num):
-		print "获取第%s页..." % page_num
-		url = 'http://www.qiushibaike.com/hot/page/' + page_num
+		print "获取第%d页..." % page_num
+		url = 'http://www.qiushibaike.com/hot/page/' + str(page_num)
 		user_agent = 'Mozilla/5.0 (Windows NT 10.0; WOW64)'
 		headers = {'User-Agent' : user_agent}
 
@@ -46,72 +46,70 @@ class SpiderModel(object):
 		return items
 
 	def load_page(self):
-		# 如果用户没有输入quit，则程序一直运行
-		while self.enable:
-			print 'aaaaaaaa\n'
-			if len(self.pages) < 2:
-				try:
-					# 获取新页面中的段子
-					print 'page:%d' % self.page
-					my_page = self.get_page(str(self.page))
-					self.page += 1
-					self.pages.append(my_page)
-				except Exception, e:
-					print 'except:', e
-					print '无法连接糗事百科\n'
-			else:
-				print 'bbb'
-				time.sleep(1)
+		print "load_page self.pages:%d" % len(self.pages)
+		if len(self.pages) < 2:
+			try:
+				# 获取新页面中的段子
+				my_page = self.get_page(self.page)
+				self.page += 1
+				self.pages.append(my_page)
+			except Exception, e:
+				print 'except:', e
+				print '无法连接糗事百科\n'
+
 
 	def show_page(self, now_page, page_num):
+		print '\n显示第%d页 共%d条:' % (page_num, len(now_page))
+		i = 0
 		for items in now_page:
-			print '\n 第%d页' % page_num, items
-			user_input = raw_input()
-			if (user_input == 'quit'):
-				self.enable = False
-				break
+			print "第%d条" % i, items
+			i += 1
 
 	def start_model(self):
 		self.enable = True
 		page = self.page
 
-		thread.start_new_thread(self.load_page, ())
-
-		while self.enable:
+		print "start_model enable:%d" % self.enable
+		
+		while True:
+			self.load_page()
 			if self.pages:
 				current_page = self.pages[0]
 				del self.pages[0]
 				self.show_page(current_page, page)
 				page += 1
-				print page
+				print 'page number:' + str(page)
+			
+			user_input = raw_input()
+			if (user_input == 'quit'):
+				break
+			else:
+				print '\n'
 
 
 
+if __name__ == '__main__':
+	print "start program........."
 
+	#----------- 程序的入口处 -----------
+	print """
+	---------------------------------------
+	   程序：糗百爬虫
+	   版本：0.3
+	   作者：why
+	   日期：2014-06-03
+	   语言：Python 2.7
+	   操作：输入quit退出阅读糗事百科
+	   功能：按下回车依次浏览今日的糗百热点
+	---------------------------------------
+	   原文地址(源代码):http://blog.csdn.net/pleasecallmewhy/article/details/8932310
+	   修改内容:网址和正则表达式部分
+	   修改者:Ryan
+	   修改日期:2015-09-19
+	   测试通过版本:Python 2.7.10
+	---------------------------------------
+	"""
 
-#----------- 程序的入口处 -----------
-print """
----------------------------------------
-   程序：糗百爬虫
-   版本：0.3
-   作者：why
-   日期：2014-06-03
-   语言：Python 2.7
-   操作：输入quit退出阅读糗事百科
-   功能：按下回车依次浏览今日的糗百热点
----------------------------------------
-   原文地址(源代码):http://blog.csdn.net/pleasecallmewhy/article/details/8932310
-   修改内容:网址和正则表达式部分
-   修改者:Ryan
-   修改日期:2015-09-19
-   测试通过版本:Python 2.7.10
----------------------------------------
-"""
-
-test_model = SpiderModel()
-test_model.start_model()
-
-
-# now_page = test_model.get_page(1)
-# for item in now_page:
-# 	print item
+	print "please input in interger"
+	test_model = SpiderModel()
+	test_model.start_model()
