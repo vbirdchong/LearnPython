@@ -119,13 +119,13 @@ class AqiModule(object):
 			csv_writer = csv.writer(csv_file)
 			# 如果之前没有数据写入过，则需要将标识信息写上
 			if has_header == False:
+				print 'Creat the new aqi_record csv file!'
 				csv_writer.writerow(['Data', 'Week', 'Time', 'Curren PM25', 'Min PM25', 'Max PM25'])
 
 			# 将数据追加记录
+			print 'Save new data...'
 			data = [self.data, self.week, self.time, self.cur_pm25, self.min_pm25, self.max_pm25]
 			csv_writer.writerow(data)
-
-
 
 
 if __name__ == '__main__':
