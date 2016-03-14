@@ -30,10 +30,6 @@ class AqiModule(object):
 		print 'Content-Length:%s' % response.headers['Content-Length']
 		aqi_city_page = response.read()
 		print self.url
-
-		f = open('page_string', 'w')
-		f.write(aqi_city_page)
-		f.close()
 		
 		self.get_data(aqi_city_page)
 
