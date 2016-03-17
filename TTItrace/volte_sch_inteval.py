@@ -26,7 +26,7 @@ class volte_interval(object):
 	"""
 	docstring for volte_interval
 	"""
-	def __init__(self, file_name, crnti):
+	def __init__(self, file_name, crnti=0):
 		'''
 		param: ul_or_dl [ul:0, dl:1], crnti must be integer
 		'''
@@ -58,8 +58,8 @@ class volte_interval(object):
 						# print row_data
 						# print row_data[time_list_index]
 						self.time.append(row_data[time_list_index])
-						self.sfn.append(row_data[sfn_list_index])
-						self.esfn.append(row_data[esfn_list_index])
+						self.sfn.append(int(row_data[sfn_list_index]))
+						self.esfn.append(int(row_data[esfn_list_index]))
 
 				print self.time
 				print self.sfn
@@ -67,6 +67,23 @@ class volte_interval(object):
 		except IOError, e:
 			raise e
 
+		row_name = [self.list_index_param['time'],
+					self.list_index_param['sfn'],
+					self.list_index_param['esfn']]
+		self.save_to_file(row_name)
+
+	def save_to_file(self, row_name):
+		try:
+			with open('volte_interval_crnti_'+str(self.crnti)+'.csv', 'wb+') as csv_file:
+				csv_write = csv.writer(csv_file)
+				csv_write.writerow(row_name)
+
+				for row_line in range(len(self.time)):
+					row = [self.time[row_line], self.sfn[row_line], self.esfn[row_line]]
+					csv_write.writerow(row)
+
+		except Exception, e:
+			raise e
 
 	def check_file(self):
 		if self.file_name.upper().find('DL') > -1:
