@@ -2,7 +2,9 @@
 # coding=utf-8
 
 import csv
+import sys
 from itertools import islice
+
 
 dl_key_value = {
 	'crnti': 'ETtiTraceDlParUe_crnti',
@@ -123,13 +125,17 @@ class volte_interval(object):
 
 def main():
 	# input_crnti = raw_input("Please enter the crnti: ")
+	for i in range(1, len(sys.argv)):
+		print 'arg:%d' % i, sys.argv[i]
 
-	input_crnti = '5631'
+	test_file = sys.argv[1]
+	input_crnti = sys.argv[2]
+
 	if (not (input_crnti.isdigit()) or (int(input_crnti) > 65535 or int(input_crnti) <= 0)):
 		print"The input value is invalid, crnti=" + input_crnti
 	else:
 		# test_file = 'ttiTrace_20160314141705_1232_dl_0013_ffff.csv'
-		test_file = 'ttiTrace_20160314141705_1232_dl_0013.csv'
+		# test_file = 'ttiTrace_20160314141705_1232_dl_0013.csv'
 		test = volte_interval(test_file, int(input_crnti))
 		test.filter_by_crnti()
 		# filter_by_crnti(int(input_crnti))
