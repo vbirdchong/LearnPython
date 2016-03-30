@@ -257,8 +257,11 @@ def main():
 	for i in range(1, len(sys.argv)):
 		print 'arg:%d' % i, sys.argv[i]
 
-	test_file = sys.argv[1]
-	input_crnti = sys.argv[2]
+	# test_file = sys.argv[1]
+	# input_crnti = sys.argv[2]
+
+	test_file = 'ttiTrace_20160328104952_1233_ul_0008.csv'
+	input_crnti = '15416'
 
 	if (not (input_crnti.isdigit()) or (int(input_crnti) > 65535 or int(input_crnti) <= 0)):
 		print"The input value is invalid, crnti=" + input_crnti
@@ -269,3 +272,4 @@ def main():
 
 if __name__ == '__main__':
 	main()
+	raw_input('Enter enter key to exit...')
