@@ -193,14 +193,15 @@ class volte_interval(object):
 					self.ttitrace_record_data['esfn'][row_line]]
 					
 		# calculate the diff for sfn
-		sfn_diff = 65535
+		sfn_diff = 0
 		if row_line == 0:
-			sfn_diff = 65535
+			sfn_diff = 0
 		elif row_line <= len(self.ttitrace_record_data['crnti']) and row_line > 0:
 			sfn_diff = (int(self.ttitrace_record_data['sfn'][row_line]) * 10 + int(self.ttitrace_record_data['esfn'][row_line])) - \
 						(int(self.ttitrace_record_data['sfn'][row_line-1]) * 10 + int(self.ttitrace_record_data['esfn'][row_line-1]))
 			if sfn_diff < 0:
 				sfn_diff += 10240
+		sfn_diff *= 10
 		row_data.append(sfn_diff)
 
 		row_data.append(self.ttitrace_record_data['trNum'][row_line])
@@ -253,15 +254,17 @@ class volte_interval(object):
 
 
 def main():
-	# input_crnti = raw_input("Please enter the crnti: ")
-	for i in range(1, len(sys.argv)):
-		print 'arg:%d' % i, sys.argv[i]
+
+	test_file = raw_input("Please enter the UL or DL csv file:\n")
+	input_crnti = raw_input("Please enter the crnti:\n")
+	# for i in range(1, len(sys.argv)):
+	# 	print 'arg:%d' % i, sys.argv[i]
 
 	# test_file = sys.argv[1]
 	# input_crnti = sys.argv[2]
 
-	test_file = 'ttiTrace_20160328104952_1233_ul_0008.csv'
-	input_crnti = '15416'
+	# test_file = 'ttiTrace_20160328104952_1233_ul_0008.csv'
+	# input_crnti = '15416'
 
 	if (not (input_crnti.isdigit()) or (int(input_crnti) > 65535 or int(input_crnti) <= 0)):
 		print"The input value is invalid, crnti=" + input_crnti
