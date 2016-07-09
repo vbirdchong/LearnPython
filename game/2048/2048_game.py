@@ -155,6 +155,8 @@ def main():
 			a = reduce_left(a)
 		elif key == "d":
 			a = reduce_right(a)
+		elif key == "q":
+			break
 			
 		if a == b:
 			print "no number to be reduced"
