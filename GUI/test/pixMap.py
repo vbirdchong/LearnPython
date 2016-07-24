@@ -20,7 +20,7 @@ class CPixmap(QtGui.QWidget):
 		hbox.addWidget(lbl)
 		self.setLayout(hbox)
 
-		self.move(300, 200)
+		self.move(100, 100)
 		self.setWindowTitle('Linux')
 		self.show()
 
