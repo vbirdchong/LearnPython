@@ -18,3 +18,9 @@
 4. show all keywords 
 @DESKTOP-T9C6AK0[D:multiclipboard]|25> python multiClipBoard.py list
 @DESKTOP-T9C6AK0[D:multiclipboard]|26> ['key1', 'key2']  --> ctrl+v
+
+5.delete the keyword
+
+@DESKTOP-T9C6AK0[D:multiclipboard]|42> python multiClipBoard.py  delete key2	--> delete 'good bye' from file
+
+@DESKTOP-T9C6AK0[D:multiclipboard]|43>		--> ctrl+v, clean the clipboard and nothing output
