@@ -6,11 +6,19 @@ import requests
 import bs4
 import sys
 import urllib
+import urllib2
 import openpyxl
+import time
+import numpy
 
 
 reload(sys)
 sys.setdefaultencoding('utf8')
+
+
+hds=[{'User-Agent':'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'},\
+{'User-Agent':'Mozilla/5.0 (Windows NT 6.2) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.12 Safari/535.11'},\
+{'User-Agent': 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)'}]
 
 
 def dou_ban_book_search(bookTagLists):
@@ -33,14 +41,23 @@ def book_search(bookTag):
         print('Getting book info for tag:%s on Page: %d' % (bookTag.decode(), pageIdx + 1))
         url = 'https://book.douban.com/tag/' + urllib.quote(bookTag) \
                 + '?start=' + str(pageIdx * 20) + '&type=T'
+        time.sleep(numpy.random.rand() * 2)
 
-        res = requests.get(url)
         try:
-            res.raise_for_status()
-            soup = bs4.BeautifulSoup(res.text)
-        except Exception as e:
-            print('There was an error for get url...')
-            raise e
+            request = urllib2.Request(url, headers=hds[pageIdx % len(hds)])
+            response = urllib2.urlopen(request).read()
+            soup = bs4.BeautifulSoup(str(response))
+        except (urllib2.HTTPError, urllib2.URLError) as e:
+            print(e)
+            continue
+
+        # res = requests.get(url)
+        # try:
+        #     res.raise_for_status()
+        #     soup = bs4.BeautifulSoup(res.text)
+        # except Exception as e:
+        #     print('There was an error for get url...')
+        #     raise e
 
         subjectListSoup = soup.select('div[id="subject_list"]')
         subjectItem = subjectListSoup[0].select('li[class="subject-item"]')
@@ -106,8 +123,9 @@ def save_book_to_excel(bookLists, bookTagLists):
 
 
 def main():
-    bookTagLists = ['编程', '科学']
+    # bookTagLists = ['编程', '科学']
     # bookTagLists = ['编程', '文学', '小说']
+    bookTagLists = ['王小波', '村上春树', '鲁迅', '文学', '社会', '数学', '经济学', '科普', '互联网', '科技']
     bookLists = dou_ban_book_search(bookTagLists)
     save_book_to_excel(bookLists, bookTagLists)
 
