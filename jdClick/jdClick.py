@@ -35,12 +35,11 @@ def main():
     password.send_keys('password')
     password.submit()
 
-
     # logIn = browser.find_element_by_css_selector('input[id="loginname"]')
     # print(logIn.get_attribute('id'))
-    # logIn.send_keys('cc.chong.chen@gmail.com')
+    # logIn.send_keys('username')
     # password = browser.find_element_by_css_selector('input[id="nloginpwd"]')
-    # password.send_keys('l6o2v0e806love')
+    # password.send_keys('password')
     # password.submit()
 
 
