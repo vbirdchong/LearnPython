@@ -2,7 +2,7 @@
 # coding: utf-8
 
 import sys
-# import pyperclip
+import pyperclip
 
 def copyTemplate():
     strTemplate = \
@@ -17,11 +17,9 @@ def copyTemplate():
 
     [Author]
     '''
-    # pyperclip.copy(strTemplate)
+    pyperclip.copy(strTemplate)
 
 def main():
-    print(sys.path)
-    print('hello')
     copyTemplate()
 
 if __name__ == '__main__':
