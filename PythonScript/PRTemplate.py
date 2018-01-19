@@ -9,18 +9,19 @@ def copyTemplate():
     '''
     [Findings]
 
-    [Logs]
-
-    [Next Step]
+    [Log files]
 
     [Conclusion]
 
-    [Author]
+    [Next Steps]
+
+    [Analysis Author]
     '''
     pyperclip.copy(strTemplate)
 
 def main():
     copyTemplate()
+    print("Template info was in clipbord, Paste it directly...")
 
 if __name__ == '__main__':
     main()
