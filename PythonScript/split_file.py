@@ -2,11 +2,12 @@
 
 import os
 import sys
+import time
 
 # DONE: 1. file name should split correctly xx.csc.txt.a.log 
 # DONE: 2. the input file is include a path, so we need get the right file name D:\LearnPython\SYSLOG.LOG
 # DONE: 3. change to path then create the file
-# TODO: 4. if we read file as size, we will meet the last line would not complete issue
+# DONE: 4. if we read file as size, we will meet the last line would not complete issue
 
 # 1024 * 1024 Byte = 1MB
 SPLITE_UNIT = 1048576
@@ -39,25 +40,28 @@ def split_log_by_size(path_info, split_size):
     with open(file_name, 'r') as input_file:
         split_file_index = 0
         while True:
-            data = input_file.read(split_size * SPLITE_UNIT)
+            # data = input_file.read(split_size * SPLITE_UNIT)
+            data = input_file.readlines(split_size * SPLITE_UNIT)
             if not data:
                 break
             new_file_name = file_prefix + "_" + str(split_file_index) + "." + file_postfix
             split_file_index += 1
-            print(new_file_name)
-            print("size:" + str(len(data)))
+            print("Creating file: " + new_file_name + "...")
             with open(new_file_name, 'w') as output_file:
-                output_file.write(data)
+                # output_file.write(data)
+                output_file.writelines(data)
 
 def main():
-    # TEST_FILE = r'D:\LearnPython\SYSLOG.CSV.LOG'
     print(sys.argv)
     if len(sys.argv) != 3:
         print(USAGE)
     else:
         path = sys.argv[1]
         size = int(sys.argv[2])
+        time_start = time.clock()
         split_log_by_size(path, size)
+        time_end = time.clock()
+        print("Split done, time spent: " + str(time_end - time_start) )
 
 if __name__ == '__main__':
     main()
