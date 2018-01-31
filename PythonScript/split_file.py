@@ -19,18 +19,21 @@ Usage: python splite_file.py src_file_path split_size
 
 
 def get_path_and_file(path_info):
-    detail = path_info.split('\\')
-    file_name = detail[-1]
-    path = ('\\').join(detail[0:-1])
-    print("file:" + file_name)
-    print("path:" + path)
+    path = os.path.dirname(path_info)
+    file_name = os.path.basename(path_info)
+    print("Path:" + os.path.dirname(path_info))
+    print("File:" + os.path.basename(path_info))
     return path, file_name
 
 def get_file_pre_post_fix(file_name):
-    point_index = file_name.rfind('.')
-    file_prefix = file_name[:point_index]
-    file_postfix = file_name[point_index + 1:]
+    info = os.path.splitext(file_name)
+    file_prefix = info[0]
+    file_postfix = info[1]
     return file_prefix, file_postfix
+
+def write_to_new_file(new_file_name, data):
+    with open(new_file_name, 'w') as output_file:
+        output_file.writelines(data)
 
 def split_log_by_size(path_info, split_size):
     path, file_name = get_path_and_file(path_info)
@@ -40,16 +43,13 @@ def split_log_by_size(path_info, split_size):
     with open(file_name, 'r') as input_file:
         split_file_index = 0
         while True:
-            # data = input_file.read(split_size * SPLITE_UNIT)
             data = input_file.readlines(split_size * SPLITE_UNIT)
             if not data:
                 break
-            new_file_name = file_prefix + "_" + str(split_file_index) + "." + file_postfix
+            new_file_name = file_prefix + "_" + str(split_file_index) + file_postfix
             split_file_index += 1
             print("Creating file: " + new_file_name + "...")
-            with open(new_file_name, 'w') as output_file:
-                # output_file.write(data)
-                output_file.writelines(data)
+            write_to_new_file(new_file_name, data)
 
 def main():
     print(sys.argv)
