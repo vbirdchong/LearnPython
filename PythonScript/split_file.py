@@ -11,11 +11,11 @@ import time
 
 # 1024 * 1024 Byte = 1MB
 SPLITE_UNIT = 1048576
-USAGE = '''
+USAGE_INFO = '''
 Usage: python splite_file.py src_file_path split_size
  src_file_path: file path
  split_size: the unit of size if 1MB
- e.g. python splite_file.py D:\\LOG\\SYSLOG.LOG 50'''
+ e.g.: python splite_file.py D:\\LOG\\SYSLOG.LOG 50'''
 
 
 def get_path_and_file(path_info):
@@ -54,7 +54,7 @@ def split_log_by_size(path_info, split_size):
 def main():
     print(sys.argv)
     if len(sys.argv) != 3:
-        print(USAGE)
+        print(USAGE_INFO)
     else:
         path = sys.argv[1]
         size = int(sys.argv[2])

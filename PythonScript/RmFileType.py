@@ -6,10 +6,10 @@ import send2trash
 from git import Repo
 
 USAGE_INFO = '''
-Usage:
- python RmFileType.py <file_name> <file_path> <git_or_cmd>
+Usage: python RmFileType.py <file_name> <file_path> <git_or_cmd>
  git: use git rm command to delete the file
- cmd: use windows command to delete the file and send to trash'''
+ cmd: use windows command to delete the file and send to trash
+ e.g: python RmFileType.py a.exe D:\ cmd'''
 
 def deleteFile(file_name, file_path, command):
     repo = Repo(file_path)

@@ -4,6 +4,9 @@
 import sys
 import pyperclip
 
+USAGE_INFO = '''
+Usage: python PRTemplate.py'''
+
 def copyTemplate():
     strTemplate = \
     '''

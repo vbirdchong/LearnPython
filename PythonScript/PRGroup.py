@@ -3,6 +3,11 @@
 
 import sys
 
+USAGE_INFO = '''
+Usage: python PRGroup.py [group_name]
+ group_name: TDDMACPS/UEC/CLEEC...
+ e.g.: python PRGroup.py UEC'''
+
 TDDMACPS = {
     'group': 'NIHZSMAC',
     'email': 'I_EXT_MBB_GLOBAL_LTE_TDD_RRM_MAINTENANCE_GMS'

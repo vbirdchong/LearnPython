@@ -4,6 +4,10 @@ import requests
 from bs4 import BeautifulSoup
 import sys
 
+USAGE_INFO = '''
+Usage: python Weather.py [city_name]
+ e.g.: python Weather.py hangzhou'''
+
 WEATHER_URL = 'http://tianqi.com/hangzhou/7'
 HEADERS = {'User-Agent':'Mozilla/5.0 (Windows NT 6.2) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.12 Safari/535.11'}
 PROXY = {'http': 'http://10.144.1.10:8080'}
@@ -41,7 +45,7 @@ def main():
     elif len(sys.argv) == 2:
         city = sys.argv[1].lower()
     else:
-        print('Usage: python Weather.py city_name\n city_name: hangzhou, shanghai, ...')
+        print(USAGE_INFO)
         return
     
     weather_url = 'http://tianqi.com/' + city + '/7'
