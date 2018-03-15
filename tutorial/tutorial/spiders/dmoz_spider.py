@@ -1,10 +1,11 @@
 import scrapy
 
+from tutorial.items import DmozItem
+
 class DmozSpider(scrapy.spiders.Spider):
     name = "dmoz"
     allowed_domains = ["dmoztools.net"]
     start_urls = [
-        # "http://www.cnblogs.com/rwxwsblog/p/4557123.html/"
         "http://www.dmoztools.net/Computers/Programming/Languages/Python/Books/",
         "http://www.dmoztools.net/Computers/Programming/Languages/Python/Resources/"
     ]
@@ -16,6 +17,12 @@ class DmozSpider(scrapy.spiders.Spider):
     #         yield scrapy.Request(url = url, callback=self.parse, meta={'proxy':meta_proxy})
 
     def parse(self, response):
-        filename = response.url.split("/")[-2]
-        with open(filename, "wb") as f:
-            f.write(response.body)
+        for sel in response.xpath('//ul/li'):
+            item = DmozItem()
+            item['title'] = sel.xpath('a/text()').extract()
+            item['link'] = sel.xpath('a/@href').extract()
+            item['desc'] = sel.xpath('text()').extract()
+            yield item
+        # filename = response.url.split("/")[-2]
+        # with open(filename, "wb") as f:
+        #     f.write(response.body)
