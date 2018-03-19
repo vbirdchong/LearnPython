@@ -1,10 +1,10 @@
 ## 验证码识别
 
-对于验证码，我们可以通过ORC的开源库tesseract-orc来识别图中的内容，然后在python中使用pytesseract来调用它，获取正确的内容。
+对于验证码，我们可以通过OCR的开源库tesseract-ocr来识别图中的内容，然后在python中使用pytesseract来调用它，获取正确的内容。
 
-### tesseract-orc安装方法
+### tesseract-ocr安装方法
 
-1. tesseract-orc 下载地址如下：
+1. tesseract-ocr 下载地址如下：
 
 https://github.com/tesseract-ocr/tesseract/wiki/4.0-with-LSTM#400-alpha-for-windows
 
