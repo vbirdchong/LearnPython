@@ -133,6 +133,16 @@ element_dom.xpath("(//div//p)[1]")
 
 [XPath笔记](https://segmentfault.com/n/1330000008635451)
 
+### CSS的使用
+
+如果要使用CSS来获取元素，但不知道入参怎么填，那么最简单的方法就是用浏览器的开发工具，在Elements页面的底部标出每个css的名字，直接拿来使用即可。
+```
+<div class="product_main">
+...
+</div>
+sel = response.css('div.product_main')
+```
+
 ### 自定义设置
 
 默认设定在setting.py文件中，如果要修改其中的部分参数，我们可以直接在里面进行修改。还有一种方式就是通过custom_settings 属性来进行实现，这样可以为每个spider设定各自的配置值。
