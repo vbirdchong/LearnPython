@@ -2,6 +2,8 @@ import itchat
 import os
 from math import sqrt
 from PIL import Image
+import csv
+import jieba.analyse
 
 # itchat.auto_login(hotReload=True)
 # index = 1
@@ -18,10 +20,11 @@ from PIL import Image
 #         print(repr(e))
 # itchat.run()
 
-def getFriendsInfo():
+def get_friends_info():
     male = []
     female = []
     unknow = []
+    signature = []
     province = {}
     city = {}
     for friend in itchat.get_friends(update=True)[0:]:
@@ -37,15 +40,41 @@ def getFriendsInfo():
 
         city.setdefault(friend['City'],0)
         city[friend['City']] += 1
-    return male, female, unknow, province, city
+        signature.append(friend['Signature'])
+    base_info = {}
+    base_info['male_info'] = male
+    base_info['female_info'] = female
+    base_info['province_info'] = province
+    base_info['city_info'] = city
+    base_info['signature_info'] = signature
+    return base_info
+
+def save_to_file(friends_info):
+    with open('friends_province.csv', 'w', newline='') as f:
+        csv_writer = csv.writer(f)
+        csv_writer.writerow(['Province', 'Number'])
+        provinces_info = friends_info['province_info']
+        print(provinces_info)
+        for item in provinces_info.items():
+            csv_writer.writerow([item[0], item[1]])
+
+    with open('signature.txt', 'w', encoding='utf-8') as f:
+        signature_info = friends_info['signature_info']
+        for i in signature_info:
+            f.write(i + '\n')
+
+def read_signature_file():
+    with open('signature.txt', 'rb') as f:
+        content = f.read()
+        tags = jieba.analyse.extract_tags(content, topK=20)
+        print(','.join(tags))
 
 def main():
-    itchat.login()
-    male, female, unknow, province, city = getFriendsInfo()
-    print("male:" + str(len(male)) + ",female:" + str(len(female)) + ",unknow:" + str(len(unknow)))
-    print(province)
-    print(city)
-    itchat.run
+    # itchat.login()
+    # friends_info = get_friends_info()
+    # save_to_file(friends_info)
+    # itchat.run
+    read_signature_file()
 
 if __name__ == '__main__':
     main()
